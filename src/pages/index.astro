@@ -1,0 +1,28 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+<BaseLayout
+  title="Jacob Bellotti"
+  description="Jacob Bellotti — Award-winning creative writer, producer, designer, voiceover talent, and performer in Los Angeles."
+  bodyClass="page page--home"
+  current=""
+>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__text">
+        <h1 class="hero__title" id="hero-title">Jacob Bellotti</h1>
+        <p class="hero__bio">I'm an award-winning creative writer, producer, designer, voiceover talent, and performer in Los Angeles.</p>
+      </div>
+      <div class="hero__image-wrap">
+        <picture>
+          <source media="(max-width: 700px)" srcset="assets/images/jacob-hero-vertical.webp">
+          <img
+            class="hero__image"
+            src="assets/images/jacob-hero.webp"
+            alt="Jacob Bellotti smiling, wearing glasses and a burgundy shirt"
+            width="2133"
+            height="1378"
+          >
+        </picture>
+      </div>
+    </section>
+</BaseLayout>
