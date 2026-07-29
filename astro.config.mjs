@@ -5,22 +5,8 @@ export default defineConfig({
   site: "https://jacobbellotti.com",
   base: "/",
   build: {
-    // Keep about.html, work.html, etc. so existing relative links + menu JS stay identical.
-    format: "file",
+    // Emits about/index.html so URLs resolve as /about/
+    format: "directory",
   },
-  integrations: [
-    sitemap({
-      serialize(item) {
-        const url = item.url.replace(/\/$/, "");
-        if (url === "https://jacobbellotti.com") {
-          item.url = "https://jacobbellotti.com/";
-          return item;
-        }
-        if (!url.endsWith(".html")) {
-          item.url = `${url}.html`;
-        }
-        return item;
-      },
-    }),
-  ],
+  integrations: [sitemap()],
 });

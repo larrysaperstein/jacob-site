@@ -25,7 +25,7 @@ const site = Astro.site ?? new URL("https://jacobbellotti.com");
 const canonicalURL =
   current === ""
     ? new URL("/", site)
-    : new URL(`/${current}.html`, site);
+    : new URL(`/${current}/`, site);
 const imageURL = new URL(image.replace(/^\//, ""), site);
 const pageURL = canonicalURL.href;
 ---
@@ -55,8 +55,8 @@ const pageURL = canonicalURL.href;
   <meta name="twitter:description" content={description}>
   <meta name="twitter:image" content={imageURL.href}>
 
-  <link rel="stylesheet" href="css/fonts.css">
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="/css/fonts.css">
+  <link rel="stylesheet" href="/css/styles.css">
 
   <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
@@ -112,6 +112,6 @@ const pageURL = canonicalURL.href;
 
   <SiteMenu current={current} />
 
-  <script is:inline src="js/main.js"></script>
+  <script is:inline src="/js/main.js"></script>
 </body>
 </html>

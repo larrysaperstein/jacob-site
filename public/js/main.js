@@ -13,7 +13,8 @@
 
   function getPageName(pathOrUrl) {
     const url = new URL(pathOrUrl, window.location.href);
-    return url.pathname.split("/").pop() || "index.html";
+    const parts = url.pathname.replace(/\/+$/, "").split("/").filter(Boolean);
+    return parts[parts.length - 1] || "index";
   }
 
   function getTransitionDuration() {
