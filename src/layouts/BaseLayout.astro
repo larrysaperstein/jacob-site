@@ -6,19 +6,104 @@ interface Props {
   description: string;
   bodyClass: string;
   current?: string;
+  /** Absolute or site-root path for social share image */
+  image?: string;
+  /** Open Graph type — default website */
+  ogType?: "website" | "profile";
 }
 
-const { title, description, bodyClass, current = "" } = Astro.props;
+const {
+  title,
+  description,
+  bodyClass,
+  current = "",
+  image = "/assets/images/jacob-hero.webp",
+  ogType = "website",
+} = Astro.props;
+
+const site = Astro.site ?? new URL("https://jacobbellotti.com");
+const canonicalURL =
+  current === ""
+    ? new URL("/", site)
+    : new URL(`/${current}.html`, site);
+const imageURL = new URL(image.replace(/^\//, ""), site);
+const pageURL = canonicalURL.href;
 ---
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content={description}>
   <title>{title}</title>
+  <meta name="description" content={description}>
+  <meta name="author" content="Jacob Bellotti">
+  <meta name="theme-color" content="#2b075f">
+  <link rel="canonical" href={pageURL}>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <meta property="og:type" content={ogType}>
+  <meta property="og:site_name" content="Jacob Bellotti">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content={title}>
+  <meta property="og:description" content={description}>
+  <meta property="og:url" content={pageURL}>
+  <meta property="og:image" content={imageURL.href}>
+  <meta property="og:image:alt" content="Jacob Bellotti">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content={title}>
+  <meta name="twitter:description" content={description}>
+  <meta name="twitter:image" content={imageURL.href}>
+
   <link rel="stylesheet" href="css/fonts.css">
   <link rel="stylesheet" href="css/styles.css">
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": `${site.href}#website`,
+        "url": site.href,
+        "name": "Jacob Bellotti",
+        "description": "Award-winning creative writer, producer, designer, voiceover talent, and performer in Los Angeles.",
+        "publisher": { "@id": `${site.href}#person` },
+        "inLanguage": "en-US",
+      },
+      {
+        "@type": "Person",
+        "@id": `${site.href}#person`,
+        "name": "Jacob Bellotti",
+        "url": site.href,
+        "image": new URL("assets/images/jacob-hero.webp", site).href,
+        "jobTitle": ["Creative Writer", "Producer", "Designer", "Voiceover Artist", "Performer"],
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Los Angeles",
+          "addressRegion": "CA",
+          "addressCountry": "US",
+        },
+        "sameAs": [
+          "https://www.instagram.com/jacobbellotti/",
+          "https://www.tiktok.com/@letstalkaboutthatpod",
+          "https://www.youtube.com/@letstalkaboutthatpod",
+          "https://www.imdb.com/name/nm12338060/",
+          "https://www.linkedin.com/in/jacob-bellotti/",
+          "https://soundcloud.com/jacob-bellotti",
+        ],
+      },
+      {
+        "@type": "WebPage",
+        "@id": `${pageURL}#webpage`,
+        "url": pageURL,
+        "name": title,
+        "description": description,
+        "isPartOf": { "@id": `${site.href}#website` },
+        "about": { "@id": `${site.href}#person` },
+        "inLanguage": "en-US",
+      },
+    ],
+  })} />
 </head>
 <body class={bodyClass}>
   <main class="page__content">
