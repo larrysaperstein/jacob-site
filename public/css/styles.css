@@ -84,7 +84,7 @@ ul {
   position: relative;
   z-index: 1;
   min-height: 100dvh;
-  padding-bottom: calc(var(--nav-dock-height) + 2rem);
+  padding-bottom: 0;
 }
 
 /* ==========================================================================
@@ -282,12 +282,19 @@ ul {
 
 :root {
   --color-purple: #2b075f;
+  --color-purple-deep: #1a0438;
   --color-paper: #fff6ed;
   --nav-bar-height: 4.95rem;
   --nav-dock-height: 4.95rem;
   --menu-masthead-height: 5.3rem;
   --menu-purple-height: calc(var(--menu-masthead-height) * 2);
   --menu-edge-height: calc(100vw * 137.3 / 1595.88);
+  --section-edge-height: calc(100vw * 137.3 / 1595.88);
+  --section-content-pad: 2.5rem;
+  --section-title-scroll-margin: 1.25rem;
+  --footer-dock-clearance: calc(
+    var(--nav-dock-height) + var(--menu-edge-height) + 2.5rem
+  );
   --transition-menu: 0.65s cubic-bezier(0.7, 0, 0.2, 1);
   --transition-hover: 0.3s ease;
 }
@@ -310,7 +317,7 @@ body {
   position: relative;
   z-index: 1;
   min-height: 100dvh;
-  padding-bottom: calc(var(--nav-dock-height) + 2rem);
+  padding-bottom: 0;
 }
 
 /* Homepage */
@@ -372,25 +379,97 @@ body {
   opacity: 1;
 }
 
-.page--home {
-  overflow: hidden;
-  height: 100dvh;
-}
-
-html:has(.page--home) {
-  overflow: hidden;
-}
-
 .page--home .page__content {
-  height: 100dvh;
   min-height: 0;
-  overflow: hidden;
   padding-bottom: 0;
+}
+
+.site-section {
+  position: relative;
+  scroll-margin-top: 0;
+  z-index: 1;
+}
+
+.site-section#home {
+  min-height: 100dvh;
+  z-index: 1;
+  background: #06141b;
+}
+
+.site-section#about,
+.site-section#design,
+.site-section#podcast {
+  background: var(--color-purple);
+}
+
+.site-section#work,
+.site-section#voiceover,
+.site-section#contact {
+  background: var(--color-purple-deep);
+}
+
+/*
+  Tear seam: each section (except home) is masked with the paper-edge SVG at its
+  top. Transparent valleys reveal the previous section underneath — so the hero
+  photo is literally cut by the jagged line, and purple→purple seams have no
+  painted flat edge that can hairline at odd widths. Edge strip overlaps the
+  solid mask by a few px so the join sits mid-SVG, not on a hard boundary.
+*/
+.site-section:not(#home) {
+  /* Pull up by a full edge-height so the previous section (hero photo, etc.)
+     fully underlaps the mask strip — otherwise a straight seam shows mid-tear. */
+  margin-top: calc(var(--section-edge-height) * -1.05);
+  padding-top: calc(var(--section-edge-height) * 0.85);
+  -webkit-mask-image:
+    url("/assets/images/paper-edge-long.svg"),
+    linear-gradient(#000 0 0);
+  -webkit-mask-size:
+    calc(100% + 4vw) calc(var(--section-edge-height) + 4px),
+    100% calc(100% - var(--section-edge-height) + 6px);
+  -webkit-mask-position:
+    -2vw top,
+    center bottom;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-composite: source-over;
+  mask-image:
+    url("/assets/images/paper-edge-long.svg"),
+    linear-gradient(#000 0 0);
+  mask-size:
+    calc(100% + 4vw) calc(var(--section-edge-height) + 4px),
+    100% calc(100% - var(--section-edge-height) + 6px);
+  mask-position:
+    -2vw top,
+    center bottom;
+  mask-repeat: no-repeat;
+  mask-composite: add;
+}
+
+/* Alternate the tear pattern horizontally on every other section */
+.site-section#work,
+.site-section#voiceover,
+.site-section#contact {
+  -webkit-mask-image:
+    url("/assets/images/paper-edge-long-mirror.svg"),
+    linear-gradient(#000 0 0);
+  mask-image:
+    url("/assets/images/paper-edge-long-mirror.svg"),
+    linear-gradient(#000 0 0);
+}
+
+.site-section#about { z-index: 2; }
+.site-section#work { z-index: 3; }
+.site-section#design { z-index: 4; }
+.site-section#voiceover { z-index: 5; }
+.site-section#podcast { z-index: 6; }
+.site-section#contact { z-index: 7; }
+
+.site-section:not(#home) h1 {
+  scroll-margin-top: var(--section-title-scroll-margin);
 }
 
 .page--home .hero {
   height: 100dvh;
-  min-height: 0;
+  min-height: 100dvh;
 }
 
 .page--home .hero__image {
@@ -405,7 +484,10 @@ html:has(.page--home) {
   min-height: 100dvh;
   max-width: none;
   margin: 0;
-  padding: 1.4rem 5.3% calc(var(--nav-dock-height) + 5rem);
+  padding:
+    var(--section-content-pad)
+    5.3%
+    calc(var(--nav-dock-height) + var(--section-content-pad));
 }
 
 .about__layout {
@@ -491,7 +573,10 @@ html:has(.page--home) {
 .podcast {
   max-width: 56rem;
   margin: 0 auto;
-  padding: 2.5rem 5.3% calc(var(--nav-dock-height) + 4rem);
+  padding:
+    var(--section-content-pad)
+    5.3%
+    calc(var(--nav-dock-height) + var(--section-content-pad));
 }
 
 .podcast__title {
@@ -598,7 +683,10 @@ html:has(.page--home) {
 .voiceover {
   max-width: 48rem;
   margin: 0 auto;
-  padding: 2.5rem 5.3% calc(var(--nav-dock-height) + 4rem);
+  padding:
+    var(--section-content-pad)
+    5.3%
+    calc(var(--nav-dock-height) + var(--section-content-pad));
 }
 
 .voiceover__title {
@@ -668,7 +756,10 @@ html:has(.page--home) {
 .work {
   max-width: 72rem;
   margin: 0 auto;
-  padding: 2.5rem 5.3% calc(var(--nav-dock-height) + 4rem);
+  padding:
+    var(--section-content-pad)
+    5.3%
+    calc(var(--nav-dock-height) + var(--section-content-pad));
 }
 
 .work__title {
@@ -714,7 +805,10 @@ html:has(.page--home) {
 .design {
   max-width: 72rem;
   margin: 0 auto;
-  padding: 2.5rem 5.3% calc(var(--nav-dock-height) + 4rem);
+  padding:
+    var(--section-content-pad)
+    5.3%
+    calc(var(--nav-dock-height) + var(--section-content-pad));
 }
 
 .design__title {
@@ -797,7 +891,10 @@ html:has(.page--home) {
 .contact {
   max-width: 34rem;
   margin: 0 auto;
-  padding: 2.5rem 5.3% calc(var(--nav-dock-height) + 4rem);
+  padding:
+    var(--section-content-pad)
+    5.3%
+    var(--section-content-pad);
 }
 
 .contact__title {
@@ -921,6 +1018,59 @@ html:has(.page--home) {
   transform: none;
 }
 
+/* Footer */
+.site-footer {
+  background: var(--color-purple-deep);
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  padding:
+    var(--section-content-pad)
+    5.3%
+    var(--footer-dock-clearance);
+  text-align: center;
+}
+
+.site-footer__sitemap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.45rem 1.35rem;
+  margin-bottom: 1.15rem;
+}
+
+.site-footer__link {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.92);
+  letter-spacing: 0.03em;
+  transition: color var(--transition-hover);
+}
+
+.site-footer__link:hover,
+.site-footer__link:focus-visible {
+  color: var(--color-paper);
+  outline: none;
+}
+
+.site-footer__legal {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 300;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.site-footer__legal a {
+  color: var(--color-paper);
+  transition: color var(--transition-hover);
+}
+
+.site-footer__legal a:hover,
+.site-footer__legal a:focus-visible {
+  color: #fff;
+  outline: none;
+}
+
 /* ==========================================================================
    Site menu
 
@@ -988,21 +1138,39 @@ html:has(.page--home) {
 }
 
 /* SVG always visible, always sitting on the panel's top edge.
-   Upper area of the SVG is transparent — torn edge shows through. */
+   Upper area of the SVG is transparent — torn edge shows through.
+   Oversized (~2vw per side) so artwork insets + browser rounding never leave gaps. */
 .site-menu__edge {
   flex-shrink: 0;
   line-height: 0;
   pointer-events: none;
   position: relative;
   z-index: 1;
-  transform: translateY(1px);
+  left: 50%;
+  width: calc(100% + 4vw);
+  transform: translateX(-50%) translateY(1px);
+}
+
+/* Cream underlay closes any side slits in the torn artwork above the dock */
+.site-menu__edge::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 48%;
+  background: var(--color-paper);
+  z-index: -1;
 }
 
 .site-menu__edge picture,
 .site-menu__edge img {
   display: block;
   width: 100%;
+  max-width: none;
   height: auto;
+  position: relative;
+  z-index: 1;
 }
 
 .site-menu__edge img {
@@ -1192,10 +1360,6 @@ html:has(.page--home) {
   fill: var(--color-purple);
 }
 
-body.is-navigating {
-  overflow: hidden;
-}
-
 /* Mid widths: keep bio clear of the overlapping scrapbook photos */
 @media (max-width: 850px) and (min-width: 701px) {
   .about__layout {
@@ -1230,45 +1394,63 @@ body.is-navigating {
     --nav-dock-height: 4.05rem;
     --menu-masthead-height: 4.5rem;
     --menu-edge-height: calc(100vw * 58.51 / 796.41);
+    --section-edge-height: calc(100vw * 58.51 / 796.41);
+    --section-content-pad: 2rem;
+    --footer-dock-clearance: calc(
+      var(--nav-dock-height) + var(--menu-edge-height) + 3rem
+    );
+  }
+
+  .site-section:not(#home) {
+    -webkit-mask-image:
+      url("/assets/images/paper-edge.svg"),
+      linear-gradient(#000 0 0);
+    mask-image:
+      url("/assets/images/paper-edge.svg"),
+      linear-gradient(#000 0 0);
+  }
+
+  .site-section#work,
+  .site-section#voiceover,
+  .site-section#contact {
+    -webkit-mask-image:
+      url("/assets/images/paper-edge-mirror.svg"),
+      linear-gradient(#000 0 0);
+    mask-image:
+      url("/assets/images/paper-edge-mirror.svg"),
+      linear-gradient(#000 0 0);
+  }
+
+  .site-section#home {
+    background: var(--color-purple-deep);
   }
 
   .hero {
-    display: flex;
-    flex-direction: column;
-    background: var(--color-purple);
+    display: block;
+    position: relative;
+    height: 100dvh;
+    min-height: 100dvh;
+    background: var(--color-purple-deep);
     overflow: hidden;
   }
 
   .page--home .hero {
-    display: flex;
+    display: block;
     height: 100dvh;
+    min-height: 100dvh;
   }
 
   .hero__image-wrap {
-    position: relative;
-    inset: auto;
-    order: 1;
-    flex: 0 0 auto;
+    position: absolute;
+    inset: 0;
     width: 100%;
-    height: 54vh;
+    height: 100%;
     min-height: 0;
     overflow: hidden;
   }
 
   .hero__image-wrap::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 9%;
-    background: linear-gradient(
-      to bottom,
-      transparent 0%,
-      var(--color-purple) 100%
-    );
-    pointer-events: none;
-    z-index: 1;
+    display: none;
   }
 
   .hero__image-wrap picture {
@@ -1293,41 +1475,70 @@ body.is-navigating {
     transform: none;
   }
 
+  /* Deep-purple banner — paper-edge tear lets the photo show through above */
   .hero__text {
-    position: relative;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
     top: auto;
-    left: auto;
-    order: 2;
-    flex: 1 1 auto;
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     text-align: center;
-    margin-top: -1.5vh;
-    padding: 0.25rem 1.5rem calc(var(--nav-bar-height) + 2.35rem);
+    margin-top: 0;
+    padding:
+      calc(var(--section-edge-height) * 0.55 + 1.35rem)
+      1.5rem
+      calc(var(--nav-bar-height) + 1.35rem);
     z-index: 2;
-    background: transparent;
+    background: var(--color-purple-deep);
+    -webkit-mask-image:
+      url("/assets/images/paper-edge.svg"),
+      linear-gradient(#000 0 0);
+    -webkit-mask-size:
+      calc(100% + 4vw) calc(var(--section-edge-height) + 4px),
+      100% calc(100% - var(--section-edge-height) + 6px);
+    -webkit-mask-position:
+      -2vw top,
+      center bottom;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-composite: source-over;
+    mask-image:
+      url("/assets/images/paper-edge.svg"),
+      linear-gradient(#000 0 0);
+    mask-size:
+      calc(100% + 4vw) calc(var(--section-edge-height) + 4px),
+      100% calc(100% - var(--section-edge-height) + 6px);
+    mask-position:
+      -2vw top,
+      center bottom;
+    mask-repeat: no-repeat;
+    mask-composite: add;
   }
 
   .hero__title {
     font-size: clamp(2.5rem, 11vw, 3.5rem);
     white-space: normal;
     text-align: center;
-    margin-bottom: 0.85rem;
+    margin-bottom: 0.65rem;
   }
 
   .hero__bio {
     max-width: 20rem;
-    font-size: 1.05rem;
-    line-height: 1.25;
+    font-size: 1rem;
+    line-height: 1.3;
     text-align: center;
     margin: 0 auto;
   }
 
   .about {
-    padding: 1.5rem 1.25rem calc(var(--nav-dock-height) + 4rem);
+    padding:
+      var(--section-content-pad)
+      1.25rem
+      calc(var(--nav-dock-height) + var(--section-content-pad));
   }
 
   .about__layout {
@@ -1387,7 +1598,10 @@ body.is-navigating {
   }
 
   .podcast {
-    padding: 2rem 1.25rem calc(var(--nav-dock-height) + 3.5rem);
+    padding:
+      var(--section-content-pad)
+      1.25rem
+      calc(var(--nav-dock-height) + var(--section-content-pad));
   }
 
   .podcast__title {
@@ -1420,7 +1634,10 @@ body.is-navigating {
   }
 
   .voiceover {
-    padding: 2rem 1.25rem calc(var(--nav-dock-height) + 3.5rem);
+    padding:
+      var(--section-content-pad)
+      1.25rem
+      calc(var(--nav-dock-height) + var(--section-content-pad));
   }
 
   .voiceover__title {
@@ -1439,7 +1656,10 @@ body.is-navigating {
   }
 
   .work {
-    padding: 2rem 1.25rem calc(var(--nav-dock-height) + 3.5rem);
+    padding:
+      var(--section-content-pad)
+      1.25rem
+      calc(var(--nav-dock-height) + var(--section-content-pad));
   }
 
   .work__title {
@@ -1453,7 +1673,10 @@ body.is-navigating {
   }
 
   .design {
-    padding: 2rem 1.25rem calc(var(--nav-dock-height) + 3.5rem);
+    padding:
+      var(--section-content-pad)
+      1.25rem
+      calc(var(--nav-dock-height) + var(--section-content-pad));
   }
 
   .design__title {
@@ -1495,7 +1718,25 @@ body.is-navigating {
   }
 
   .contact {
-    padding: 2rem 1.25rem calc(var(--nav-dock-height) + 3.5rem);
+    padding:
+      var(--section-content-pad)
+      1.25rem
+      var(--section-content-pad);
+  }
+
+  .site-footer {
+    padding:
+      var(--section-content-pad)
+      1.25rem
+      var(--footer-dock-clearance);
+  }
+
+  .site-footer__link {
+    font-size: 0.9rem;
+  }
+
+  .site-footer__legal {
+    font-size: 0.72rem;
   }
 
   .contact__title {

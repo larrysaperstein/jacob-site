@@ -8,22 +8,330 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   current=""
   ogType="profile"
 >
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="hero__text">
-        <h1 class="hero__title" id="hero-title">Jacob Bellotti</h1>
-        <p class="hero__bio">I'm an award-winning creative writer, producer, designer, voiceover talent, and performer in Los Angeles.</p>
-      </div>
-      <div class="hero__image-wrap">
-        <picture>
-          <source media="(max-width: 700px)" srcset="/assets/images/jacob-hero-vertical.webp">
-          <img
-            class="hero__image"
-            src="/assets/images/jacob-hero.webp"
-            alt="Jacob Bellotti smiling, wearing glasses and a burgundy shirt"
-            width="2133"
-            height="1378"
-          >
-        </picture>
-      </div>
+    <section class="site-section" id="home" aria-label="Home">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero__text">
+          <h1 class="hero__title" id="hero-title">Jacob Bellotti</h1>
+          <p class="hero__bio">I'm an award-winning creative writer, producer, designer, voiceover talent, and performer in Los Angeles.</p>
+        </div>
+        <div class="hero__image-wrap">
+          <picture>
+            <source media="(max-width: 700px)" srcset="/assets/images/jacob-hero-vertical.webp">
+            <img
+              class="hero__image"
+              src="/assets/images/jacob-hero.webp"
+              alt="Jacob Bellotti smiling, wearing glasses and a burgundy shirt"
+              width="2133"
+              height="1378"
+            >
+          </picture>
+        </div>
+      </section>
     </section>
+
+    <section class="site-section" id="about" aria-label="About">
+      <article class="about">
+        <div class="about__layout">
+          <div class="about__left">
+            <h1 class="about__headline">LA Heart. NJ Flair.</h1>
+
+            <div class="about__text">
+              <p>Jacob Bellotti is a creative producer and writer in Los Angeles, who has created hit shows for television and written for the EMMY-Winning “RuPaul’s Drag Race.”</p>
+
+              <p>In television, Jacob has created shows like “Owning Manhattan” for Netflix, Crave TV’s “Slaycation!”, and “Bring Back My Girls” for WOWPresentsPlus. He wrote sketches featured on the 28-EMMY winning “RuPaul’s Drag Race” and created challenges for the show. He has produced shows like "American Gladiators" for Prime Video, "Schooled!" for Netflix, and "Citizen Detective" for Sundance.</p>
+
+              <p>Spending 4 years in creative development at World of Wonder Productions, Jacob has also consulted for Hi Mom Productions, worked in talent relations on “America’s Most Wanted” for FOX, and was a talent assistant on “Friends: The Reunion.”</p>
+
+              <p>Beyond developing and producing television, he has written a YA novel, voice acted professionally, performed for the American Comedy Institute in Manhattan, and hosts the popular queer podcast “Let’s Talk About That! With Larry Saperstein and Jacob Bellotti.”</p>
+            </div>
+          </div>
+
+          <div class="about__photos" aria-hidden="false">
+            <figure class="scrapbook-photo scrapbook-photo--top">
+              <img
+                src="/assets/images/jacob-bio.webp"
+                alt="Jacob Bellotti in a blue sequined jacket"
+                width="1386"
+                height="1360"
+                loading="lazy"
+              >
+            </figure>
+            <figure class="scrapbook-photo scrapbook-photo--bottom">
+              <img
+                src="/assets/images/bio-mountains.webp"
+                alt="Jacob Bellotti outdoors in a blue windbreaker with mountains in the background"
+                width="600"
+                height="800"
+                loading="lazy"
+              >
+            </figure>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="site-section" id="work" aria-label="Work">
+      <section class="work" aria-labelledby="work-title">
+        <h1 class="work__title" id="work-title">Work</h1>
+        <div class="work-grid">
+          <a class="work-grid__item" href="https://deadline.com/2026/03/mark-rober-kids-science-competition-series-netflix-1236740436/" target="_blank" rel="noopener noreferrer" aria-label="Schooled!">
+            <img src="/assets/images/shows/schooled.webp" alt="Poster for Mark Rober’s Schooled! on Netflix" loading="lazy">
+          </a>
+          <a class="work-grid__item" href="https://youtu.be/4oasYFUcW8M?si=AnJRFhwblWE4zv0s" target="_blank" rel="noopener noreferrer" aria-label="American Gladiators">
+            <img src="/assets/images/shows/americangladiators.webp" alt="Poster for American Gladiators on Prime Video" loading="lazy">
+          </a>
+          <a class="work-grid__item" href="https://youtu.be/b2IK72dKdDk?si=e4SjFYpGRTZbnPXB" target="_blank" rel="noopener noreferrer" aria-label="Slaycation">
+            <img src="/assets/images/shows/slaycation.webp" alt="Poster for Slaycation" loading="lazy">
+          </a>
+          <a class="work-grid__item" href="https://youtu.be/_7vslRXwJZw?si=NeXDD0LoyYJeNXT3" target="_blank" rel="noopener noreferrer" aria-label="RPDR All Stars">
+            <img src="/assets/images/shows/rpdras7.webp" alt="Poster for RuPaul’s Drag Race All Stars" loading="lazy">
+          </a>
+          <a class="work-grid__item" href="https://youtu.be/OfnFU99-uds?si=-Xc4f540LlOMy6gn" target="_blank" rel="noopener noreferrer" aria-label="Owning Manhattan">
+            <img src="/assets/images/shows/owningmanhattan.webp" alt="Poster for Owning Manhattan on Netflix" loading="lazy">
+          </a>
+          <a class="work-grid__item" href="https://youtu.be/i05rVRHc9yE?si=4f-JyBgbrFSoTvmV" target="_blank" rel="noopener noreferrer" aria-label="Drag Race">
+            <img src="/assets/images/shows/rpdr15.webp" alt="Poster for RuPaul’s Drag Race" loading="lazy">
+          </a>
+          <a class="work-grid__item" href="https://youtu.be/UvdAfq8j67w?si=TKzCYEUJiQT3KZ5w" target="_blank" rel="noopener noreferrer" aria-label="Drag Race UK">
+            <img src="/assets/images/shows/rpdruk.webp" alt="Poster for RuPaul’s Drag Race UK" loading="lazy">
+          </a>
+          <a class="work-grid__item" href="https://ew.com/tv/drag-race-symone-gigi-goode-avalon-tv-trailer-spice-world/" target="_blank" rel="noopener noreferrer" aria-label="Avalon TV">
+            <img src="/assets/images/shows/avalontv.webp" alt="Poster for Avalon TV" loading="lazy">
+          </a>
+          <a class="work-grid__item" href="https://youtu.be/qTL_U6mwU4w?si=j6OvGfKFhrMyd6Y4" target="_blank" rel="noopener noreferrer" aria-label="Bring Back My Girls">
+            <img src="/assets/images/shows/bringbackmygirls.webp" alt="Poster for Bring Back My Girls" loading="lazy">
+          </a>
+          <a class="work-grid__item" href="https://www.imdb.com/title/tt29335921/" target="_blank" rel="noopener noreferrer" aria-label="True Crime Story: Citizen Detective">
+            <img src="/assets/images/shows/truecrime.webp" alt="Poster for True Crime Story: Citizen Detective" loading="lazy">
+          </a>
+          <a class="work-grid__item" href="https://www.imdb.com/title/tt26215854/" target="_blank" rel="noopener noreferrer" aria-label="Restaurants at the End of the World">
+            <img src="/assets/images/shows/restaurants.webp" alt="Poster for Restaurants at the End of the World" loading="lazy">
+          </a>
+          <a class="work-grid__item" href="https://www.youtube.com/watch?v=wOIJ4bZmWD8" target="_blank" rel="noopener noreferrer" aria-label="America’s Most Wanted">
+            <img src="/assets/images/shows/americawanted.jpeg" alt="Poster for America’s Most Wanted" loading="lazy">
+          </a>
+        </div>
+      </section>
+    </section>
+
+    <section class="site-section" id="design" aria-label="Design">
+      <section class="design" aria-labelledby="design-title">
+        <h1 class="design__title" id="design-title">Design Samples</h1>
+        <div class="design-grid">
+          <div class="design-grid__row">
+            <a
+              class="design-grid__item design-grid__item--landscape design-grid__item--ogs"
+              href="https://drive.google.com/file/d/1V6XcYaOxsRXtkW-D77PfO6K1lFySrfTX/view"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="OG’s of 90210"
+            >
+              <img src="/assets/images/design/ogs.webp" alt="Design sample for The OG’s of 90210" loading="lazy">
+            </a>
+            <a
+              class="design-grid__item design-grid__item--portrait design-grid__item--snob"
+              href="https://drive.google.com/file/d/1LQaEmlBsLOFQlpOeAi03WCkXgU6wCyQG/view"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="High Snobiety"
+            >
+              <img src="/assets/images/design/snob.webp" alt="High Snobiety poster design by Jacob Bellotti" loading="lazy">
+            </a>
+          </div>
+
+          <div class="design-grid__row">
+            <a
+              class="design-grid__item design-grid__item--portrait design-grid__item--slaycation"
+              href="https://drive.google.com/file/d/1d5-25ixMY6F3qxSI39HT68PJ0iog7cRo/view"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Slaycation"
+            >
+              <img src="/assets/images/design/slaycation-design.webp" alt="Slaycation poster design by Jacob Bellotti" loading="lazy">
+            </a>
+            <a
+              class="design-grid__item design-grid__item--landscape design-grid__item--cumming"
+              href="https://drive.google.com/file/d/1V54P0yP5wxDjpgQJiGLGkj540Rx21mTL/view"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Club Cumming"
+            >
+              <img src="/assets/images/design/cumming.webp" alt="Club Cumming design by Jacob Bellotti" loading="lazy">
+            </a>
+          </div>
+
+          <div class="design-grid__row">
+            <a
+              class="design-grid__item design-grid__item--landscape design-grid__item--comedy"
+              href="https://drive.google.com/file/d/1W2Z_YplcnG1066VAjT17co2oNbzld4g0/view"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Comedy Gold"
+            >
+              <img src="/assets/images/design/comedygold.webp" alt="Comedy Gold design by Jacob Bellotti" loading="lazy">
+            </a>
+            <a
+              class="design-grid__item design-grid__item--portrait design-grid__item--tracy"
+              href="https://drive.google.com/file/d/10DY4CqCh-N-Z3K9-lL3V1hC5EyF4kpBn/view"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Tracy Takes Texas"
+            >
+              <img src="/assets/images/design/traceytexas.webp" alt="Tracy Takes Texas poster design by Jacob Bellotti" loading="lazy">
+            </a>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <section class="site-section" id="voiceover" aria-label="Voiceover">
+      <article class="voiceover">
+        <h1 class="voiceover__title">Voiceover</h1>
+
+        <div class="voiceover__media">
+          <div class="voiceover__embed">
+            <iframe
+              width="100%"
+              height="166"
+              scrolling="no"
+              frameborder="no"
+              allow="autoplay; encrypted-media"
+              loading="lazy"
+              title="Jacob Bellotti VO Demo Reel"
+              src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A1925055632&color=%232b075f&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"
+            ></iframe>
+          </div>
+          <p class="voiceover__credit">
+            <a href="https://soundcloud.com/jacob-bellotti" target="_blank" rel="noopener noreferrer">Jacob Bellotti</a>
+            <span aria-hidden="true"> · </span>
+            <a href="https://soundcloud.com/jacob-bellotti/jacob-bellotti-vo-demo-reel" target="_blank" rel="noopener noreferrer">Jacob Bellotti VO Demo Reel</a>
+          </p>
+        </div>
+
+        <div class="voiceover__copy">
+          <p>Jacob is an experienced Voice Over Artist, with credits including scratch tracks for Nintendo’s The Legend of Zelda: Breath of the Wild, and instructional videos for GOW-MAC Industries.</p>
+          <p>His work on radio liners earned him multiple nominations for Mercury Voice Awards in NYC.</p>
+        </div>
+      </article>
+    </section>
+
+    <section class="site-section" id="podcast" aria-label="Podcast">
+      <article class="podcast">
+        <h1 class="podcast__title">Let’s Talk About That!</h1>
+
+        <div class="podcast__media">
+          <div class="podcast__embed podcast__embed--spotify">
+            <iframe
+              data-testid="embed-iframe"
+              src="https://open.spotify.com/embed/show/0dHnGMkv899UP9YwhStWJ6?utm_source=generator"
+              title="Let’s Talk About That! on Spotify"
+              width="100%"
+              height="160"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              allowfullscreen
+              loading="lazy"
+              style="border-radius: 12px; background: transparent;"
+            ></iframe>
+          </div>
+
+          <div class="podcast__embed podcast__embed--youtube">
+            <iframe
+              src="https://www.youtube.com/embed/videoseries?si=FPmaB0bz-vfPVmHs&amp;list=PLz9S7lF5IHvNa7KSxQaORBrh5BTc3pGpO"
+              title="Let’s Talk About That! YouTube playlist"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+              loading="lazy"
+            ></iframe>
+          </div>
+        </div>
+
+        <nav class="podcast__social" aria-label="Podcast social links">
+          <a
+            class="podcast__social-link"
+            href="https://www.instagram.com/letstalkaboutthatpod"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/></svg>
+          </a>
+          <a
+            class="podcast__social-link"
+            href="https://www.tiktok.com/@letstalkaboutthatpod"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="TikTok"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" aria-hidden="true"><path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3z"/></svg>
+          </a>
+          <a
+            class="podcast__social-link"
+            href="https://www.youtube.com/@letstalkaboutthatpod"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="YouTube"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" aria-hidden="true"><path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.01 2.01 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.01 2.01 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31 31 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.01 2.01 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A100 100 0 0 1 7.858 2zM6.4 5.209v4.818l4.157-2.408z"/></svg>
+          </a>
+        </nav>
+
+        <div class="podcast__copy">
+          <p>Are you ready to talk about THAT??? Each week, power-couple Larry Saperstein and Jacob Bellotti unpack pop culture, talk to their celebrity friends, and keep you updated on the most important topics in the world!</p>
+          <p>This queer-focused comedy podcast airs every Monday and streams on every major platform, including Spotify, Apple Music, Amazon, YouTube, iHeart Radio, and more.</p>
+          <p>The podcast has been well-received, leading to multiple partnerships with GLAAD and a dedicated fan base who tune in every week. With insider industry talk, Let’s Talk About That! has taken the world by storm.</p>
+        </div>
+      </article>
+    </section>
+
+    <section class="site-section" id="contact" aria-label="Contact">
+      <section class="contact" aria-labelledby="contact-title">
+        <h1 class="contact__title" id="contact-title">Contact</h1>
+        <p class="contact__intro">Thanks for getting in touch! Please fill out this contact form and I'll get back to you as soon as possible.</p>
+
+        <form class="contact-form" action="https://api.web3forms.com/submit" method="POST">
+          <input type="hidden" name="access_key" value="c62ea38a-d4af-4d42-9de5-fd75939b5c61">
+          <input type="hidden" name="subject" value="New Contact Form Submission — Jacob Bellotti">
+          <input type="hidden" name="from_name" value="Jacob Bellotti Website">
+          <input type="checkbox" name="botcheck" class="contact-form__honeypot" tabindex="-1" autocomplete="off">
+
+          <div class="contact-form__fields">
+            <div class="contact-form__group">
+              <label for="name" class="contact-form__label">Name</label>
+              <input id="name" name="name" class="contact-form__input" placeholder="Your name" type="text" required>
+            </div>
+            <div class="contact-form__group">
+              <label for="email" class="contact-form__label">Email</label>
+              <input id="email" name="email" class="contact-form__input" placeholder="Your email" type="email" required>
+            </div>
+            <div class="contact-form__group">
+              <label for="phone" class="contact-form__label">Phone</label>
+              <input id="phone" name="phone" class="contact-form__input" placeholder="+1 (234) 567-8900" type="tel">
+            </div>
+            <div class="contact-form__group">
+              <label for="message" class="contact-form__label">Message</label>
+              <textarea id="message" name="message" class="contact-form__textarea" placeholder="Your message" required></textarea>
+            </div>
+          </div>
+
+          <button class="contact-form__submit" type="submit">Send Message</button>
+        </form>
+      </section>
+    </section>
+
+    <footer class="site-footer" aria-label="Site footer">
+      <nav class="site-footer__sitemap" aria-label="Sitemap">
+        <a class="site-footer__link" href="#home">Home</a>
+        <a class="site-footer__link" href="#about">About</a>
+        <a class="site-footer__link" href="#work">Work</a>
+        <a class="site-footer__link" href="#design">Design</a>
+        <a class="site-footer__link" href="#voiceover">Voiceover</a>
+        <a class="site-footer__link" href="#podcast">Podcast</a>
+        <a class="site-footer__link" href="#contact">Contact</a>
+      </nav>
+      <p class="site-footer__legal">
+        © 2026 Jacob Bellotti. All rights reserved. Website by
+        <a href="https://sapersteindesign.com" target="_blank" rel="noopener noreferrer">Saperstein Creative</a>.
+      </p>
+    </footer>
 </BaseLayout>

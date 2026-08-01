@@ -1,0 +1,27 @@
+---
+/**
+ * Legacy path redirect → single-page section hash.
+ * Keep these so old /about/ etc. links still land in the right place.
+ */
+interface Props {
+  section: string;
+}
+
+const { section } = Astro.props;
+const target = section === "home" ? "/#home" : `/#${section}`;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, follow">
+  <meta http-equiv="refresh" content={`0;url=${target}`}>
+  <link rel="canonical" href={`https://jacobbellotti.com${target}`}>
+  <title>Redirecting…</title>
+  <script is:inline define:vars={{ target }}>
+    location.replace(target);
+  </script>
+</head>
+<body></body>
+</html>

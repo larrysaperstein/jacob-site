@@ -5,17 +5,11 @@
   const menuToggle = document.querySelector(".menu-toggle");
   const menuLinks = document.querySelectorAll(".site-menu__link");
   const brandLink = document.querySelector(".site-menu__brand");
-  const pageContent = document.querySelector(".page__content");
+  const sections = Array.from(document.querySelectorAll(".site-section[id]"));
 
   if (!siteMenu || !menuToggle) return;
 
   let isNavigating = false;
-
-  function getPageName(pathOrUrl) {
-    const url = new URL(pathOrUrl, window.location.href);
-    const parts = url.pathname.replace(/\/+$/, "").split("/").filter(Boolean);
-    return parts[parts.length - 1] || "index";
-  }
 
   function getTransitionDuration() {
     const val = getComputedStyle(document.documentElement)
@@ -40,16 +34,53 @@
     menuToggle.setAttribute("aria-expanded", "false");
   }
 
-  menuToggle.addEventListener("click", () => {
-    siteMenu.classList.contains("is-open") ? closeMenu() : openMenu();
-  });
+  function getSectionIdFromHref(href) {
+    if (!href) return "home";
+    if (href.startsWith("#")) return href.slice(1) || "home";
+    try {
+      const url = new URL(href, window.location.href);
+      if (url.hash) return url.hash.slice(1) || "home";
+    } catch (_) {
+      /* ignore */
+    }
+    return "home";
+  }
 
-  async function loadPage(url, pushHistory) {
-    if (getPageName(url) === getPageName(window.location.href)) {
-      closeMenu();
-      return;
+  function updateActiveLink(sectionId) {
+    menuLinks.forEach((link) => {
+      const id = getSectionIdFromHref(link.getAttribute("href"));
+      link.classList.toggle("is-active", id === sectionId && sectionId !== "home");
+    });
+  }
+
+  function getScrollTarget(sectionId) {
+    if (sectionId === "home") {
+      return document.getElementById("home");
     }
 
+    const section = document.getElementById(sectionId);
+    if (!section) return null;
+
+    return section.querySelector("h1") || section;
+  }
+
+  function scrollToSection(sectionId, pushHistory) {
+    const target = getScrollTarget(sectionId) || document.getElementById("home");
+    if (!target) return;
+
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+    updateActiveLink(sectionId);
+
+    const hash = sectionId === "home" ? "#home" : `#${sectionId}`;
+    if (pushHistory) {
+      history.pushState({ section: sectionId }, "", hash);
+    } else {
+      history.replaceState({ section: sectionId }, "", hash);
+    }
+  }
+
+  async function navigateToSection(sectionId, pushHistory) {
+    if (isNavigating) return;
     isNavigating = true;
     document.body.classList.add("is-navigating");
 
@@ -58,28 +89,7 @@
       await wait(getTransitionDuration());
     }
 
-    try {
-      const response = await fetch(url);
-      if (!response.ok) throw new Error("Page not found");
-      const doc = new DOMParser().parseFromString(await response.text(), "text/html");
-      const newContent = doc.querySelector(".page__content");
-
-      if (newContent && pageContent) {
-        pageContent.innerHTML = newContent.innerHTML;
-      }
-
-      const newTitle = doc.querySelector("title");
-      if (newTitle) document.title = newTitle.textContent;
-
-      document.body.className = doc.body.className + " is-navigating";
-      updateActiveLink(getPageName(url));
-      window.scrollTo(0, 0);
-
-      if (pushHistory) history.pushState({ page: getPageName(url) }, "", url);
-    } catch (err) {
-      window.location.href = url;
-      return;
-    }
+    scrollToSection(sectionId, pushHistory);
 
     closeMenu();
     await wait(getTransitionDuration());
@@ -87,34 +97,68 @@
     isNavigating = false;
   }
 
-  function updateActiveLink(pageName) {
-    menuLinks.forEach((link) => {
-      link.classList.toggle("is-active", getPageName(link.getAttribute("href")) === pageName);
-    });
-  }
+  menuToggle.addEventListener("click", () => {
+    siteMenu.classList.contains("is-open") ? closeMenu() : openMenu();
+  });
 
   menuLinks.forEach((link) => {
     link.addEventListener("click", (e) => {
       e.preventDefault();
-      if (!isNavigating) loadPage(link.getAttribute("href"), true);
+      navigateToSection(getSectionIdFromHref(link.getAttribute("href")), true);
     });
   });
 
   if (brandLink) {
     brandLink.addEventListener("click", (e) => {
       e.preventDefault();
-      if (!isNavigating) loadPage(brandLink.getAttribute("href"), true);
+      navigateToSection("home", true);
     });
   }
 
-  window.addEventListener("popstate", () => {
-    if (!isNavigating) loadPage(window.location.href, false);
+  document.querySelectorAll(".site-footer__link").forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      scrollToSection(getSectionIdFromHref(link.getAttribute("href")), true);
+    });
   });
 
+  window.addEventListener("popstate", () => {
+    const sectionId = getSectionIdFromHref(window.location.hash || "#home");
+    if (!isNavigating) navigateToSection(sectionId, false);
+  });
+
+  function syncActiveFromScroll() {
+    if (isNavigating || !sections.length) return;
+
+    const marker = window.scrollY + window.innerHeight * 0.28;
+    let activeId = sections[0].id;
+
+    for (const section of sections) {
+      if (section.offsetTop <= marker) activeId = section.id;
+    }
+
+    updateActiveLink(activeId);
+  }
+
+  window.addEventListener("scroll", syncActiveFromScroll, { passive: true });
+
   history.scrollRestoration = "manual";
-  history.replaceState({ page: getPageName(window.location.href) }, "", window.location.href);
-  updateActiveLink(getPageName(window.location.href));
-  window.scrollTo(0, 0);
+  const initialId = getSectionIdFromHref(window.location.hash || "#home");
+  if (initialId && initialId !== "home") {
+    // Wait a tick so layout/fonts settle, then jump to deep link.
+    requestAnimationFrame(() => {
+      const target = getScrollTarget(initialId);
+      if (target) {
+        target.scrollIntoView({ behavior: "auto", block: "start" });
+        updateActiveLink(initialId);
+        history.replaceState({ section: initialId }, "", `#${initialId}`);
+      }
+    });
+  } else {
+    history.replaceState({ section: "home" }, "", "#home");
+    updateActiveLink("home");
+    window.scrollTo(0, 0);
+  }
 
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && siteMenu.classList.contains("is-open") && !isNavigating) {

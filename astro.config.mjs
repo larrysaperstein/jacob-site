@@ -8,5 +8,11 @@ export default defineConfig({
     // Emits about/index.html so URLs resolve as /about/
     format: "directory",
   },
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      filter: (page) =>
+        page === "https://jacobbellotti.com/" ||
+        page === "https://jacobbellotti.com",
+    }),
+  ],
 });
