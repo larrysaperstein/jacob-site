@@ -1390,6 +1390,9 @@ body {
 
 @media (max-width: 700px) {
   :root {
+    /* svh stays fixed while the URL bar shows/hides — avoids layout jumps */
+    --viewport-full: 100svh;
+    --browser-chrome-inset: 0px;
     --nav-bar-height: 4.05rem;
     --nav-dock-height: 4.05rem;
     --menu-masthead-height: 4.5rem;
@@ -1428,16 +1431,16 @@ body {
   .hero {
     display: block;
     position: relative;
-    height: 100dvh;
-    min-height: 100dvh;
+    height: var(--viewport-full);
+    min-height: var(--viewport-full);
     background: var(--color-purple-deep);
     overflow: hidden;
   }
 
   .page--home .hero {
     display: block;
-    height: 100dvh;
-    min-height: 100dvh;
+    height: var(--viewport-full);
+    min-height: var(--viewport-full);
   }
 
   .hero__image-wrap {
@@ -1463,16 +1466,18 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center top;
-    transform: none;
+    object-position: center 32%;
+    transform: scale(1.08);
+    transform-origin: center 32%;
   }
 
   .page--home .hero__image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center top;
-    transform: none;
+    object-position: center 32%;
+    transform: scale(1.08);
+    transform-origin: center 32%;
   }
 
   /* Deep-purple banner — paper-edge tear lets the photo show through above */
@@ -1764,9 +1769,21 @@ body {
     font-size: 2.2rem;
   }
 
+  .site-menu__sheet {
+    bottom: calc(var(--nav-bar-height) + var(--browser-chrome-inset));
+  }
+
+  .site-menu.is-open .site-menu__panel {
+    height: calc(
+      var(--viewport-full) - var(--nav-bar-height) - var(--menu-purple-height) - var(--menu-edge-height) + 10vh
+    );
+  }
+
   .site-menu__dock {
     grid-template-columns: 1fr 1fr;
-    padding: 0 3.7% 1.1rem;
+    bottom: var(--browser-chrome-inset);
+    padding: 0 3.7% calc(1.1rem + env(safe-area-inset-bottom, 0px));
+    transform: translateZ(0);
   }
 
   .menu-toggle {

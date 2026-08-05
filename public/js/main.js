@@ -166,6 +166,24 @@
     }
   });
 
+  /* Keep the fixed dock aligned with the visual viewport bottom on mobile.
+     Without this, Safari/Chrome toolbar hide/show shifts layout and feels choppy. */
+  function syncBrowserChromeInset() {
+    if (!window.matchMedia("(max-width: 700px)").matches) return;
+
+    const vv = window.visualViewport;
+    if (!vv) return;
+
+    const inset = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+    document.documentElement.style.setProperty("--browser-chrome-inset", `${inset}px`);
+  }
+
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener("resize", syncBrowserChromeInset);
+    window.visualViewport.addEventListener("scroll", syncBrowserChromeInset);
+    syncBrowserChromeInset();
+  }
+
   document.addEventListener("submit", async (e) => {
     const form = e.target.closest(".contact-form");
     if (!form) return;
