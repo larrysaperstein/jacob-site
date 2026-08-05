@@ -166,9 +166,10 @@
     }
   });
 
-  /* Keep the fixed dock aligned with the visual viewport bottom on mobile.
-     Without this, Safari/Chrome toolbar hide/show shifts layout and feels choppy. */
-  function syncBrowserChromeInset() {
+  /* Sync dock position and hero height to the visual viewport on mobile.
+     Dock tracks the screen bottom; hero grows when the URL bar hides so no
+     empty band appears between the photo and the nav bar. */
+  function syncMobileViewport() {
     if (!window.matchMedia("(max-width: 700px)").matches) return;
 
     const vv = window.visualViewport;
@@ -176,12 +177,13 @@
 
     const inset = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
     document.documentElement.style.setProperty("--browser-chrome-inset", `${inset}px`);
+    document.documentElement.style.setProperty("--viewport-full", `${vv.height}px`);
   }
 
   if (window.visualViewport) {
-    window.visualViewport.addEventListener("resize", syncBrowserChromeInset);
-    window.visualViewport.addEventListener("scroll", syncBrowserChromeInset);
-    syncBrowserChromeInset();
+    window.visualViewport.addEventListener("resize", syncMobileViewport);
+    window.visualViewport.addEventListener("scroll", syncMobileViewport);
+    syncMobileViewport();
   }
 
   document.addEventListener("submit", async (e) => {
